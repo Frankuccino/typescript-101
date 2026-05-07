@@ -6,7 +6,7 @@
 // --- This Code Runner is purely for better internal development loop.
 
 const log = (text: string) => {
-  console.log(`\x1b[32m\n${text}:\x1b[0m`);
+  console.log(`\x1b[30m\n${text}:\x1b[0m`);
 };
 
 type Person = {
@@ -177,5 +177,71 @@ console.log(deepMatrix);
 
 // ----
 
-// Objects - (Timestamp: 7:36:00, Time Invested: 2 hrs)
+// Objects - (Timestamp: 7:36:00, Time Invested: 2 hrs) Up Next: Objects
+log("Objects");
 // Anobject in TypeScript is a structured data type that represnets a collection of properties, each with a key and an associated value. The properties of an object can have specific types, and the object itself can be annotated with a type, often defined using an interface or a type alias. TypeScript uses structural typing, meaning that the shape of an object (its structure or properties) is what matters for type compatibility.
+const personA: { firstName: string; age: number } = {
+  firstName: "Frank",
+  age: 23,
+};
+console.log(personA);
+
+// Objects as function Return value
+function printUser(): { name: string; age: number } {
+  // factory function
+  return {
+    name: "Frank",
+    age: 23,
+  };
+}
+printUser();
+
+// ----
+
+// Type Aliases. -> (Interfaces are more powerful than Type Aliases)
+log("Type Aliases");
+// A type alias is a way to create a new name for an -> existing type <-. It allows you to define a custom type that refers to another type and give it a more meaningful or descriptive name.
+// Type aliases are defined using the `type` keyword followed by the name of the alias, an equal sign (=), and the type it refers to
+
+type Product = {
+  // The convention is to use the first letter as an Uppercase letter.
+  brand: string;
+  quantity: number;
+};
+
+function printProduct(product: Product) {
+  console.log(`Product: ${product.brand} quantity: ${product.quantity}`);
+}
+
+const myProduct: Product = { brand: "iPhone", quantity: 3 };
+printProduct(myProduct);
+
+// ----
+
+// Optional Properties ?
+log("Optional Properties");
+// You can make a certain property optional in an object type by adding a question mark (?) after the property name
+// For example, let's say you have an object type for a person with name, age, and email, but you want to make email property optional. You can do this by adding a question mark after the email property
+
+// Type Definition & Assignment
+type Book = {
+  title: string;
+  author: string;
+  copiesSold?: number; // Notice the ? (Question Mark) which makes this property optional.
+  readonly publisher: string;
+};
+
+// Variable Declarion with the type Book
+const book: Book = {
+  title: "Designing Data-Intensive Applications",
+  author: "Martin Kleppman",
+  publisher: "O'Reilly", // declared -> is a readonly property (immutable)
+};
+
+console.log(book);
+book.author = "Martin";
+console.log(book);
+// book.publisher = "Frank" // not allowed
+
+//  ----
+// Intersection Types
