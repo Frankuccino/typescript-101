@@ -199,7 +199,7 @@ printUser();
 // ----
 
 // Type Aliases. -> (Interfaces are more powerful than Type Aliases)
-log("Type Aliases");
+log("Type Aliases - type -");
 // A type alias is a way to create a new name for an -> existing type <-. It allows you to define a custom type that refers to another type and give it a more meaningful or descriptive name.
 // Type aliases are defined using the `type` keyword followed by the name of the alias, an equal sign (=), and the type it refers to
 
@@ -219,7 +219,7 @@ printProduct(myProduct);
 // ----
 
 // Optional Properties ?
-log("Optional Properties");
+log("Optional Properties - ? -");
 // You can make a certain property optional in an object type by adding a question mark (?) after the property name
 // For example, let's say you have an object type for a person with name, age, and email, but you want to make email property optional. You can do this by adding a question mark after the email property
 
@@ -245,3 +245,140 @@ console.log(book);
 
 //  ----
 // Intersection Types
+log("Intersection Types - & -");
+// An intersection type is a way to combine multiple types into a single type that includes all the properties and methods of each constituent type. An intersection type is denoted by the & symbol.
+
+type User = {
+  id: number;
+  name: string;
+  email: string;
+};
+type Permissions = {
+  canDelete: boolean;
+  canEdit: boolean;
+};
+
+type Admin = User & Permissions;
+const frank: Admin = {
+  id: 1,
+  name: "Frank",
+  email: "frank@example.com",
+  canDelete: true,
+  canEdit: true,
+};
+
+console.log(frank);
+
+// ----
+
+// Unions --- Unions are actually preferred over enums.
+log("Unions - | -");
+// Unions are used to declare a type that can have one of several possible types. Unions are useful when we want to allow a variable or parameter to accept multiple types.
+// The syntax for defining a union type in TypeScript ses the pipe symbol ( | ).
+type RequestStatus = "idle" | "loading" | "success" | "error";
+let currentStatus: RequestStatus = "idle";
+
+currentStatus = "success"; // will work
+// currentStatus = "finished" // will not work, it isn't specified as an option from the Type Definition.
+console.log(currentStatus);
+
+// Unions can also be combined with other types in TypeScript, usch as interfaces and classes. For example, we could define an interface that has a property that can be either a string or a number.
+
+type UserDetails = {
+  username: string;
+  age: number;
+  phone: number;
+};
+type AccountDetails = {
+  email: string;
+  password: string;
+};
+
+const user: UserDetails | AccountDetails = {
+  username: "frankuccino",
+  age: 23,
+  phone: 9392,
+  // email: " frank@example.com",
+  // password: "helloworld",
+};
+console.log(user);
+
+function printId(id: number | string) {
+  console.log(`Your ID is: ${id}`);
+}
+printId("23100");
+printId(23100);
+
+const items: (number | string)[] = [1, 3, 4, 7, "hello"];
+console.log(items);
+
+// ----
+
+// Literatal Types
+log("Literal Type - string | number | boolean");
+// Literal types allow you to specify a value that can only be one specific literal value. This means that a variable with a literal type can only have one specific value and no other.
+
+// String Literal Types
+let colors: "red" | "blue" | "green";
+colors = "red"; // valid
+// colors = "yellow" // invalid
+
+// Boolean Literal Types
+let isTrue: true;
+isTrue = true;
+// isTrue = false; // invalid
+
+// Numeric Literal Types
+let number: 1 | 2 | 3;
+number = 1;
+// number = 4; // invalid
+console.log(colors, isTrue, number);
+
+// ----
+
+// Tuples
+log("Tuples - [type, type]");
+// Tuple is a type that represents an array with a fixed number of elements, where each element can have a different type. The order of the types in the tuple definition corresponds to the. order of the values in the actual array. Tuples are similar to arrays, but they have a specific structure and can be used to model finite sequences with known lengths.
+let myTuple: [string, number] = ["hello", 23];
+
+// Destructuring Individual Element
+let [first, second] = myTuple;
+console.log(first);
+console.log(second);
+
+const games: [string, string, string] = [
+  "League of Legends",
+  "Mobile Legends",
+  "Valorant",
+  // "GTA", // only 3 elements as it was specifed as a Tuple so adding more or less values or different data type won't work.
+];
+
+console.log(games);
+
+// ----
+// Enums
+log("Enums - enum -");
+// Enum is a way to define a set of named constants. Enums allow you to define a collection of related values that can be used interchangeable in your code.
+
+// For example, let's say you're building a weather app and you want to define a set of possible weather conditions like "sunny", "cloudy", "rainy", and "snowy". You could define an enum like this:
+enum WeatherConditions {
+  Sunny,
+  Cloudy,
+  Rainy,
+  Snowy,
+}
+console.log(WeatherConditions);
+const currentWeather = WeatherConditions.Cloudy;
+console.log(`The current weather is ${currentWeather}`);
+
+enum WeatherConditionsNamed {
+  Sunny = "sunny",
+  Cloudy = "cloudy",
+  Rainy = "rainy",
+  Snowy = "snowy",
+}
+console.log(WeatherConditionsNamed);
+const currentWeatherNamed = WeatherConditionsNamed.Cloudy;
+console.log(`The current weather is ${currentWeatherNamed}`);
+
+// In this example, WeatherConditions is the name of the enum, and each of the values is assigned an automatic numerical value starting from 0;
