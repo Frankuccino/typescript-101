@@ -382,3 +382,101 @@ const currentWeatherNamed = WeatherConditionsNamed.Cloudy;
 console.log(`The current weather is ${currentWeatherNamed}`);
 
 // In this example, WeatherConditions is the name of the enum, and each of the values is assigned an automatic numerical value starting from 0;
+
+// ----
+
+// (Timestamp 8:18:00, Time Invested 1hr & 30) Up Next:
+// Class Properties Annotations -
+log("Class Properties Annotations - class -");
+// You can annotate class properties with a type. This allows you to define the data type of the property and ensure that it is always consistent.
+class PersonClass {
+  readonly name: string;
+  readonly age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+const personIns = new PersonClass("frank", 23);
+console.log(personIns);
+
+// ----
+
+// Access Modifiers
+log("Access Modifiers - public - private - protected -");
+// In TypeScript, you can use access modifiers to control the visibility of class members (properties and method). Access modifiers determine the ways in which class members can be accessed from within and outside the class
+// There are three types of access modifiers in TypeScript
+// 1. Public
+// 2. Private
+// 3. Protected
+
+// Public Modifier - Members marked as public can be accessed from anywhere, both inside and outside the class.
+// Private Modifier - Members marked as private can only be accessed from within the class they are defined in.
+// Protected Modifier - Members marked as protected can be accessed from within the class they are defined in, as well as any subclasses that extend the class.
+
+class Animal {
+  public name: string;
+  private age: number;
+  protected species: string;
+
+  constructor(name: string, age: number, species: string) {
+    this.name = name;
+    this.age = age;
+    this.species = species;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  protected getAge(): number {
+    return this.age;
+  }
+
+  protected getSpecies(): string {
+    return this.species;
+  }
+}
+
+class Dog extends Animal {
+  constructor(name: string, age: number) {
+    super(name, age, "Canine");
+  }
+
+  public getInfo(): string {
+    return `${this.getName()} is a ${this.getSpecies()} and is ${this.getAge()} years old`;
+    // we cannot call this.age since it is private, but we can use the protected method from Animal
+  }
+}
+
+const pity = new Dog("Pity", 4);
+
+console.log(pity.getInfo());
+
+// ----
+
+// Getters & Setters
+log("Getters & Setters - get - set -");
+// Getters and setters are used to access and modify class properties. Getters and setters allow you to define a property in a class that looks like a simple variable from the outside but internally has additional logic for getting and setting the value.
+class MyClass {
+  private _myProperty: number = 0;
+
+  get myProperty(): number {
+    return this._myProperty;
+  }
+
+  set myProperty(value: number) {
+    if (value < 0) {
+      throw new Error("Value cannot be negative");
+    }
+    this._myProperty = value;
+  }
+}
+
+const myInstance = new MyClass();
+console.log(`Current Value: ${myInstance.myProperty}`);
+
+myInstance.myProperty = 10;
+console.log(`Current Value: ${myInstance.myProperty}`);
