@@ -480,3 +480,73 @@ console.log(`Current Value: ${myInstance.myProperty}`);
 
 myInstance.myProperty = 10;
 console.log(`Current Value: ${myInstance.myProperty}`);
+
+// ----
+
+// Abstract Class (Not included in the video)
+log("Abstract Class - abstract class -");
+// 'abstract' means you CANNOT do: const shape = new Shape();
+
+abstract class Shape {
+  constructor(public color: string) {}
+
+  // A regular method: children get this for free
+  public describe(): void {
+    console.log(`This is a ${this.color} shape.`);
+  }
+
+  // An abstract method: Every child MUST implement their own version
+  abstract getArea(): number;
+}
+
+class Circle extends Shape {
+  constructor(
+    color: string,
+    private radius: number,
+  ) {
+    super(color);
+  }
+
+  // Mandatory implementation
+  getArea(): number {
+    return Math.PI * this.radius ** 2;
+  }
+}
+
+class Square extends Shape {
+  constructor(
+    color: string,
+    private side: number,
+  ) {
+    super(color);
+  }
+
+  // Mandatory implementation
+  getArea(): number {
+    return this.side * this.side;
+  }
+}
+
+// Create instances of the concrete subclasses
+const myCircle = new Circle("red", 5);
+const mySquare = new Square("blue", 10);
+
+// / 1. Using the shared logic from the Abstract Class
+myCircle.describe(); // Output: "This is a red shape."
+mySquare.describe(); // Output: "This is a blue shape."
+
+// Using the mandatory implemented logic
+console.log(`Circle Area: ${myCircle.getArea().toFixed(2)}`); // Output: Circle Area: 78.54
+console.log(`Square Area: ${mySquare.getArea()}`);
+
+// 3 Golden Ruels of Abstract Classes:
+
+// 1. No Direct Instantiation: You can't create an "Abstract" object. Youcan only create the specific classes that extend it.
+// 2. The "Contract": If you define an `abstract method()`, you are promising TypeScript that every single subclass will write its own logic for that method.
+// 3. Shared Logic: Unlike an Interface (which only defines structure), an Abstract Class can contain real code (like the describe() method above) that all children share.
+
+const shapes: Shape[] = [myCircle, mySquare];
+
+shapes.forEach((s) => {
+  console.log(`The ${s.color} shape has an area of ${s.getArea()}`);
+});
